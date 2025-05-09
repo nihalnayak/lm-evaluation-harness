@@ -6,8 +6,8 @@ training_split: train
 validation_split: train
 test_split: train
 doc_to_text: !function utils.arc_doc_to_text
-doc_to_target: "{{choices.label.index(answerKey)}}"
-doc_to_choice: "{{choices.text}}"
+doc_to_target: answerKey
+doc_to_choice: "{{choices.label}}"
 metric_list:
   - metric: acc
     aggregation: mean
