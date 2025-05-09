@@ -169,14 +169,18 @@ def format_arc_doc_to_text(example):
     return user_prompt
 
 def format_mmlu_pro_example(example, including_answer=True):
-    prompt = "Question:\n"
-    question = example["question"]
-    options = example["options"]
-    prompt += question + "\n"
-    prompt += "Options:\n"
-    for i, opt in enumerate(options):
-        prompt += "{}. {}\n".format(choices[i], opt)
-    return prompt
+    question = example['question']
+    choices = example['options']
+    letter_options = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+    choices_prompt = '\n'.join(f'{label}) {choice}' for choice, label in zip(
+        choices,
+        letter_options,
+    ))
+
+    user_prompt = f"Question: {question}\n{choices_prompt}\nAnswer:\n"
+
+    return user_prompt
 
 arc_doc_to_text = partial(format_arc_doc_to_text)
 mmlu_pro_doc_to_text = partial(format_mmlu_pro_example, including_answer=False)
